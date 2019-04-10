@@ -1,0 +1,87 @@
+[
+    {
+        "id": "ddf37d34.1cdf1",
+        "type": "tab",
+        "label": "Flow 6",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "e0dd8957.406df8",
+        "type": "rpi-gpio out",
+        "z": "ddf37d34.1cdf1",
+        "name": "LED",
+        "pin": "12",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 705.0000228881836,
+        "y": 205.99996185302734,
+        "wires": []
+    },
+    {
+        "id": "4a942b20.5164a4",
+        "type": "rpi-gpio in",
+        "z": "ddf37d34.1cdf1",
+        "name": "light sensor",
+        "pin": "7",
+        "intype": "tri",
+        "debounce": "25",
+        "read": true,
+        "x": 301.0000305175781,
+        "y": 360.9999179840088,
+        "wires": [
+            [
+                "7b7745ba.a03bec"
+            ]
+        ]
+    },
+    {
+        "id": "7b7745ba.a03bec",
+        "type": "function",
+        "z": "ddf37d34.1cdf1",
+        "name": "Change",
+        "func": "if (msg.payload === 0) {\n msg.payload = 1;\n} else if (msg.payload === 1) {\n  msg.payload = 0;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 512.698860168457,
+        "y": 285.1419982910156,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ed255f2e.3a13",
+        "type": "firebase.on",
+        "z": "ddf37d34.1cdf1",
+        "name": "Firebase-Light",
+        "firebaseconfig": "",
+        "childpath": "/light/",
+        "atStart": true,
+        "eventType": "value",
+        "queries": [],
+        "x": 153.6959991455078,
+        "y": 154.20738983154297,
+        "wires": [
+            [
+                "1aed7f1d.e8c301",
+                "e0dd8957.406df8"
+            ]
+        ]
+    },
+    {
+        "id": "1aed7f1d.e8c301",
+        "type": "debug",
+        "z": "ddf37d34.1cdf1",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 448.69883728027344,
+        "y": 84.59374237060547,
+        "wires": []
+    }
+]
