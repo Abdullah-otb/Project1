@@ -16,8 +16,8 @@
         "level": "0",
         "freq": "",
         "out": "out",
-        "x": 705.0000228881836,
-        "y": 205.99996185302734,
+        "x": 346.0000190734863,
+        "y": 365.99995136260986,
         "wires": []
     },
     {
@@ -29,8 +29,8 @@
         "intype": "tri",
         "debounce": "25",
         "read": true,
-        "x": 301.0000305175781,
-        "y": 360.9999179840088,
+        "x": 182.00001525878906,
+        "y": 279.99989795684814,
         "wires": [
             [
                 "7b7745ba.a03bec"
@@ -45,33 +45,35 @@
         "func": "if (msg.payload === 0) {\n msg.payload = 1;\n} else if (msg.payload === 1) {\n  msg.payload = 0;\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 512.698860168457,
-        "y": 285.1419982910156,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "ed255f2e.3a13",
-        "type": "firebase.on",
-        "z": "ddf37d34.1cdf1",
-        "name": "Firebase-Light",
-        "firebaseconfig": "",
-        "childpath": "/light/",
-        "atStart": true,
-        "eventType": "value",
-        "queries": [],
-        "x": 153.6959991455078,
-        "y": 154.20738983154297,
+        "x": 407.6988525390625,
+        "y": 225.14201164245605,
         "wires": [
             [
-                "1aed7f1d.e8c301",
-                "e0dd8957.406df8"
+                "4e9c61a8.384a1"
             ]
         ]
     },
     {
-        "id": "1aed7f1d.e8c301",
+        "id": "3e62e436.30cf5c",
+        "type": "rpi-gpio in",
+        "z": "ddf37d34.1cdf1",
+        "name": "Motion",
+        "pin": "11",
+        "intype": "tri",
+        "debounce": "25",
+        "read": true,
+        "x": 115.69881439208984,
+        "y": 515.4232339859009,
+        "wires": [
+            [
+                "e0dd8957.406df8",
+                "28dfd5f7.d3541a",
+                "b88c316d.ec939"
+            ]
+        ]
+    },
+    {
+        "id": "28dfd5f7.d3541a",
         "type": "debug",
         "z": "ddf37d34.1cdf1",
         "name": "",
@@ -80,8 +82,362 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 448.69883728027344,
-        "y": 84.59374237060547,
+        "x": 605.7017059326172,
+        "y": 490.77271270751953,
         "wires": []
+    },
+    {
+        "id": "cedc7245.abe49",
+        "type": "camerapi-takephoto",
+        "z": "ddf37d34.1cdf1",
+        "filemode": "1",
+        "filename": "Door1.JPEG",
+        "filedefpath": "0",
+        "filepath": "/home/pi/Pictures/",
+        "fileformat": "jpeg",
+        "resolution": "3",
+        "rotation": "180",
+        "fliph": "0",
+        "flipv": "0",
+        "brightness": "50",
+        "contrast": "0",
+        "sharpness": "0",
+        "quality": "80",
+        "imageeffect": "none",
+        "exposuremode": "auto",
+        "iso": "0",
+        "agcwait": "0.5",
+        "led": "0",
+        "awb": "auto",
+        "name": "Take Picture",
+        "x": 645.0141830444336,
+        "y": 392.00567626953125,
+        "wires": [
+            [
+                "13167631.1e8b0a",
+                "fe93f3d0.b7643",
+                "f6ce713b.1c775",
+                "7f4a6093.dec0f"
+            ]
+        ]
+    },
+    {
+        "id": "13167631.1e8b0a",
+        "type": "debug",
+        "z": "ddf37d34.1cdf1",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 831.0142059326172,
+        "y": 391.0056667327881,
+        "wires": []
+    },
+    {
+        "id": "fe93f3d0.b7643",
+        "type": "exec",
+        "z": "ddf37d34.1cdf1",
+        "command": "python3 /home/pi/Documents/firebase2.py",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": true,
+        "name": "Upload",
+        "x": 811.0141868591309,
+        "y": 483.0056343078613,
+        "wires": [
+            [
+                "d265d385.a4b4a"
+            ],
+            [
+                "d265d385.a4b4a"
+            ],
+            [
+                "d265d385.a4b4a"
+            ]
+        ]
+    },
+    {
+        "id": "d265d385.a4b4a",
+        "type": "debug",
+        "z": "ddf37d34.1cdf1",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1014.0141372680664,
+        "y": 479.50562858581543,
+        "wires": []
+    },
+    {
+        "id": "af488e62.9c1b2",
+        "type": "delay",
+        "z": "ddf37d34.1cdf1",
+        "name": "",
+        "pauseType": "rate",
+        "timeout": "40",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "30",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": true,
+        "x": 435.69886016845703,
+        "y": 416.1277894973755,
+        "wires": [
+            [
+                "cedc7245.abe49"
+            ]
+        ]
+    },
+    {
+        "id": "ae32a774.cff868",
+        "type": "firebase.on",
+        "z": "ddf37d34.1cdf1",
+        "name": "TakePic",
+        "firebaseconfig": "",
+        "childpath": "Testing/TakePic",
+        "atStart": false,
+        "eventType": "value",
+        "queries": [],
+        "x": 182.01419067382812,
+        "y": 719.0056858062744,
+        "wires": [
+            [
+                "49692851.fbfbf8",
+                "c303701d.1171d"
+            ]
+        ]
+    },
+    {
+        "id": "49692851.fbfbf8",
+        "type": "camerapi-takephoto",
+        "z": "ddf37d34.1cdf1",
+        "filemode": "1",
+        "filename": "Door1.JPEG",
+        "filedefpath": "0",
+        "filepath": "/home/pi/Pictures/",
+        "fileformat": "jpeg",
+        "resolution": "3",
+        "rotation": "180",
+        "fliph": "0",
+        "flipv": "0",
+        "brightness": "50",
+        "contrast": "0",
+        "sharpness": "0",
+        "quality": "80",
+        "imageeffect": "none",
+        "exposuremode": "auto",
+        "iso": "0",
+        "agcwait": "1.0",
+        "led": "0",
+        "awb": "auto",
+        "name": "Take Picture",
+        "x": 484.0141944885254,
+        "y": 689.0056982040405,
+        "wires": [
+            [
+                "f823726a.e4c78",
+                "f6ce713b.1c775"
+            ]
+        ]
+    },
+    {
+        "id": "f823726a.e4c78",
+        "type": "debug",
+        "z": "ddf37d34.1cdf1",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "x": 672.0141944885254,
+        "y": 688.0056982040405,
+        "wires": []
+    },
+    {
+        "id": "c303701d.1171d",
+        "type": "exec",
+        "z": "ddf37d34.1cdf1",
+        "command": "python3 /home/pi/Documents/firebase3.py",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": true,
+        "name": "Upload",
+        "x": 535.0141944885254,
+        "y": 767.0056982040405,
+        "wires": [
+            [
+                "e6ef34b8.8ba6e8"
+            ],
+            [
+                "e6ef34b8.8ba6e8"
+            ],
+            [
+                "e6ef34b8.8ba6e8"
+            ]
+        ]
+    },
+    {
+        "id": "e6ef34b8.8ba6e8",
+        "type": "debug",
+        "z": "ddf37d34.1cdf1",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 750.0141944885254,
+        "y": 767.5056982040405,
+        "wires": []
+    },
+    {
+        "id": "7f01933.24f546c",
+        "type": "firebase modify",
+        "z": "ddf37d34.1cdf1",
+        "name": "TimeStamp",
+        "firebaseconfig": "",
+        "childpath": "Testing/Time",
+        "method": "set",
+        "value": "msg.payload",
+        "priority": "msg.priority",
+        "x": 964.0000152587891,
+        "y": 597.0056896209717,
+        "wires": [
+            [
+                "cfe55c46.59de8"
+            ]
+        ]
+    },
+    {
+        "id": "5d246555.2059fc",
+        "type": "function",
+        "z": "ddf37d34.1cdf1",
+        "name": "timeConvert",
+        "func": "if ( !msg.timestamp ) msg.timestamp = Math.round(+new Date());\n\nvar dt = new Date(msg.timestamp);\nvar msg ={\n\t'all':      dt.getMonth()+ 1 + \"-\" + dt.getDate() +\"-\" + dt.getFullYear()+\"-H-\"+dt.getHours()+\"-M-\"+dt.getMinutes()+\"-S-\"+dt.getMilliseconds()\n}\nmsg.payload = msg.all;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 783.9999618530273,
+        "y": 597.0056684017181,
+        "wires": [
+            [
+                "7f01933.24f546c"
+            ]
+        ]
+    },
+    {
+        "id": "f6ce713b.1c775",
+        "type": "change",
+        "z": "ddf37d34.1cdf1",
+        "name": "Create TimeStamp",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "date"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 588.0000228881836,
+        "y": 596.00572681427,
+        "wires": [
+            [
+                "5d246555.2059fc"
+            ]
+        ]
+    },
+    {
+        "id": "cfe55c46.59de8",
+        "type": "debug",
+        "z": "ddf37d34.1cdf1",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1020.014274597168,
+        "y": 698.2784452438354,
+        "wires": []
+    },
+    {
+        "id": "4e9c61a8.384a1",
+        "type": "rpi-gpio out",
+        "z": "ddf37d34.1cdf1",
+        "name": "LED",
+        "pin": "12",
+        "set": true,
+        "level": "0",
+        "freq": "",
+        "out": "out",
+        "x": 624.0142059326172,
+        "y": 168.00569915771484,
+        "wires": []
+    },
+    {
+        "id": "7f4a6093.dec0f",
+        "type": "pythonshell in",
+        "z": "ddf37d34.1cdf1",
+        "name": "Notification",
+        "pyfile": "/home/pi/Documents/pi.py",
+        "virtualenv": "",
+        "continuous": false,
+        "stdInData": false,
+        "x": 817.0142211914062,
+        "y": 542.6419925689697,
+        "wires": [
+            [
+                "d4b449eb.80c688"
+            ]
+        ]
+    },
+    {
+        "id": "d4b449eb.80c688",
+        "type": "debug",
+        "z": "ddf37d34.1cdf1",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 987.6903533935547,
+        "y": 548.4147567749023,
+        "wires": []
+    },
+    {
+        "id": "b88c316d.ec939",
+        "type": "rbe",
+        "z": "ddf37d34.1cdf1",
+        "name": "Block First Time",
+        "func": "deadband",
+        "gap": "0",
+        "start": "",
+        "inout": "in",
+        "property": "payload",
+        "x": 324.6931610107422,
+        "y": 465.37499237060547,
+        "wires": [
+            [
+                "af488e62.9c1b2"
+            ]
+        ]
     }
 ]
